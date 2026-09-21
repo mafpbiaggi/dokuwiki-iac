@@ -19,12 +19,13 @@ A ideia é manter o repositório do aplicativo focado no conteúdo e na lógica 
 ├── .github/
 |   ├── CONTRIBUTING.md/
 |   └── workflows
-├── ansible/             # automações para facilitar o deploy do projeto principal
+├── docs/                # documentação detalhada sobre recursos específicos
+|   └── Terraform.md            
 ├── terraform/           # arquivos de infraestrutura como código
-├── tests/               # scripts de validação e verificação de saúde da aplicação
 ├── CHANGELOG            # documentação de mudanças no projeto
 └── README.md            # documentação geral do projeto
 ```
+
 
 ## Relacionamento com o projeto principal
 
@@ -33,3 +34,13 @@ O projeto de aplicação principal está em:
 - https://github.com/mafpbiaggi/dokuwiki
 
 Este repositório atua como camada de infraestrutura e automação para disponibilizar esse projeto em nuvem de forma padronizada e repetível.
+
+## Terraform
+
+O diretório `terraform/` contém a configuração de infraestrutura como código para Oracle Cloud Infrastructure (OCI).
+
+Consulte a [documentação completa](docs/Terraform.md) para detalhes sobre:
+
+- Variáveis de configuração
+- Configuração de secrets para GitHub Actions
+- Uso e comandos do Terraform
