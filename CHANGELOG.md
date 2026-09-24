@@ -2,6 +2,15 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   
+  ## [1.1.0] - 2026-09-24
+
+  ### Modificado
+  - Terraform: simplificação dos outputs do módulo de produção
+    - Remoção de outputs não utilizados
+
+  - Terraform: migração de placeholders `{{ secrets.X }}` para variáveis de ambiente `$VAR`
+    - Substituição em `backend.tf` e `main.tf` do módulo oci_production
+
   ## [1.0.0] - 2026-09-21
   
   ### Adicionado
@@ -25,3 +34,4 @@
   
   [Unreleased]: https://github.com/mafpbiaggi/dokuwiki-iac/compare/v1.0.0...HEAD
   [1.0.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.0.0
+  [1.1.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.1.0
