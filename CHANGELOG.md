@@ -6,7 +6,7 @@
 
   ### Corrigido
   - Continuous Delivery: correção de leitura do Terraform output.
-    - substituição do nome correto do output de ip público.
+    - Substituição do nome correto do output de ip público.
 
   ## [1.3.1] - 2026-09-25
 
