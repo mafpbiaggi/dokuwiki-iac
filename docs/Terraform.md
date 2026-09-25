@@ -91,7 +91,7 @@ TF_VAR_region="sa-saopaulo-1"
 TF_VAR_tenancy_ocid="ocid1.tenancy.oc1..aaaa..."
 TF_VAR_user_ocid="ocid1.user.oc1..aaaa..."
 TF_VAR_fingerprint="AA:BB:CC:..."
-TF_VAR_private_key="$(cat ~/.oci/oci_api_key.pem)"
+TF_VAR_private_key="-----BEGIN ENCRYPTED PRIVATE KEY-----<conteudo-da-chave>-----END ENCRYPTED PRIVATE KEY-----OCI_API_KEY"
 TF_VAR_private_key_password="Yxirom3TXF4wNUK"
 TF_VAR_compartment_name="dokuwiki-prod"
 TF_VAR_vcn_cidr_blocks='["10.0.0.0/16"]'
@@ -167,6 +167,60 @@ Para destruir os recursos:
 
 ```bash
 terraform destroy
+```
+
+## Execução pelo GitHub Actions
+
+O workflow [infra-provision.yml](../.github/workflows/infra-provision.yml) executa `terraform plan`, `terraform init`, `terraform validate` e `terraform apply` no diretório `terraform/`. Ele pode ser iniciado manualmente ou chamado por outro workflow reutilizável.
+
+Antes da execução, cadastre os valores abaixo em **Settings > Secrets and variables > Actions > Secrets** do repositório. O workflow lê todos pelo contexto `secrets` e os disponibiliza ao Terraform com o prefixo `TF_VAR_`:
+
+```text
+BACKEND_BUCKET
+BACKEND_KEY
+NAMESPACE
+REGION
+TENANCY_OCID
+USER_OCID
+FINGERPRINT
+PRIVATE_KEY
+PRIVATE_KEY_PASSWORD
+COMPARTMENT_NAME
+VCN_CIDR_BLOCKS
+VCN_DISPLAY_NAME
+VCN_DNS_LABEL
+PUBLIC_SUBNET_CIDR_BLOCK
+HTTP_PORT
+HTTPS_PORT
+BUCKET_NAME
+INSTANCE_AVAILABILITY_DOMAIN
+INSTANCE_SHAPE
+INSTANCE_DISPLAY_NAME
+INSTANCE_CREATE_VNIC_DETAILS_HOSTNAME_LABEL
+OPERATING_SYSTEM
+OPERATING_SYSTEM_VERSION
+SSH_PUBLIC_KEY
+```
+
+Informe `PRIVATE_KEY` com o conteúdo PEM da chave privada OCI, não com o caminho para um arquivo. `PRIVATE_KEY_PASSWORD` deve conter a senha da chave ou ficar vazio se ela não tiver senha. `VCN_CIDR_BLOCKS` deve ser uma lista JSON, por exemplo ` ["10.0.0.0/16"] `; informe também `HTTP_PORT` e `HTTPS_PORT` como números, por exemplo `80` e `443`. Como o workflow define esses valores explicitamente, configure-os mesmo que o Terraform tenha valores padrão para as portas.
+
+O bucket de backend indicado por `BACKEND_BUCKET` precisa existir antes de iniciar o workflow. `BACKEND_KEY` identifica o arquivo de state e `NAMESPACE` é o namespace do Object Storage OCI.
+
+Para executar manualmente, abra a aba **Actions**, selecione **Infra Provision**, clique em **Run workflow** e confirme a branch. Para a execução reutilizável, o workflow [continuous-delivery.yml](../.github/workflows/continuous-delivery.yml) já chama esse workflow usando `secrets: inherit`.
+
+O workflow reutilizável publica o output `instance_public_ip`. Um job posterior pode consumi-lo assim:
+
+```yaml
+jobs:
+  infra-provision:
+    uses: ./.github/workflows/infra-provision.yml
+    secrets: inherit
+
+  next-step:
+    needs: infra-provision
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "IP público: ${{ needs.infra-provision.outputs.instance_public_ip }}"
 ```
 
 ## Observação sobre o backend
