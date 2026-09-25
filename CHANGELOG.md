@@ -2,6 +2,15 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+  ## [1.3.1] - 2026-09-25
+
+  ### Adicionado
+  - Continuous Delivery: pipeline de provisionamento de infraestrutura
+    - Criação do arquivo `.github/workflows/continuous-delivery.yml`, para orquestração
+    geral dos jobs de CD.
+    - Criação do arquivo `.github/workflows/infra-provision.yml` para o provisionamento
+    da infraestrutura usando Terraform.
+
   ## [1.2.1] - 2026-09-25
 
   ### Corrigido

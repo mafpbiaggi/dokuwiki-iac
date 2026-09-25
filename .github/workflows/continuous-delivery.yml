@@ -1,0 +1,9 @@
+name: Continuous Delivery
+
+on:
+  workflow_dispatch:
+
+jobs:
+  infra-provision:
+    uses: ./.github/workflows/infra-provision.yml
+    secrets: inherit

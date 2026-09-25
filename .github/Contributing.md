@@ -29,6 +29,7 @@ Para gerar o changelog, os Pull Requests ou Commits devem ser semânticos e segu
 - `refactor:` para refatoração de código
 - `test:` para testes
 - `ci:` para fins de CI
+- `cd:` para fins de CD
 - `chore:` para tarefas gerais
 
 O prefixo `chore` é ignorado durante a geração do changelog. Pode ser usado em mensagens de commit como `chore: update changelog` por exemplo.
