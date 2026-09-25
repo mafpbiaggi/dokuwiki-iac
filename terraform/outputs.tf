@@ -1,3 +1,3 @@
-output "_instance_public_ip" {
-  value = oci_core_instance.this.public_ip
+output "oci_production_public_ip" {
+  value = module.oci_production.public_ip
 }

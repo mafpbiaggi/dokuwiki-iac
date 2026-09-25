@@ -1,9 +1,9 @@
+# .env
+.env
+
 # Local .terraform directories
 .terraform/
-
-# Ignore any module that is not production
-terraform/modules
-!terraform/modules/oci_production
+.terraform.lock.*
 
 # .tfstate files
 *.tfstate

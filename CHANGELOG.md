@@ -1,7 +1,22 @@
   # Changelog
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-  
+
+  ## [1.2.1] - 2026-09-25
+
+  ### Corrigido
+  - Terraform: correção das variáveis de configuração quebravam o projeto
+    - Substituição de placeholders literais `$VAR` por referências `var.var`
+    - Adição de variáveis ausentes para autenticação OCI (`user_ocid`, `fingerprint`,
+  `private_key`)
+    - Correção do backend Terraform para usar configuração genérica
+
+  ### Modificado
+  - Terraform: reorganização da estrutura do módulo de produção
+    - Separação entre root (variáveis) e módulo (recursos)
+    - Arquivos de recurso movidos para `terraform/modules/oci_production/`
+    - Arquivo `main.tf` do módulo substituído por passagem de variáveis via module call
+
   ## [1.1.0] - 2026-09-24
 
   ### Modificado
@@ -35,3 +50,4 @@
   [Unreleased]: https://github.com/mafpbiaggi/dokuwiki-iac/compare/v1.0.0...HEAD
   [1.0.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.0.0
   [1.1.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.1.0
+  [1.2.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.2.1
