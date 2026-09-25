@@ -17,9 +17,10 @@ A ideia é manter o repositório do aplicativo focado no conteúdo e na lógica 
 
 ```
 ├── .github/
-|   ├── CONTRIBUTING.md/
+|   ├── Contributing.md/
 |   └── workflows
 ├── docs/                # documentação detalhada sobre recursos específicos
+|   ├── samples          # arquivos de exemplo
 |   └── Terraform.md            
 ├── terraform/           # arquivos de infraestrutura como código
 ├── CHANGELOG            # documentação de mudanças no projeto

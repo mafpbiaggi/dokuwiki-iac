@@ -1,122 +1,182 @@
 # Terraform - Oracle Cloud Infrastructure
 
-Este diretório contém a configuração de infraestrutura como código para provisionamento de recursos na Oracle Cloud Infrastructure (OCI).
+Este diretório provisiona a infraestrutura necessária para executar o Dokuwiki na Oracle Cloud Infrastructure (OCI) usando Terraform.
 
-> **ATENÇÃO**: Antes de utilizar este recurso, consulte a [documentação oficial do Terraform](https://registry.terraform.io/providers/oracle/oci/latest/docs) e [oci-cli](https://docs.oracle.com/pt-br/iaas/Content/API/Concepts/cliconcepts.htm).
+> **ATENÇÃO**: antes de utilizar este material, consulte a [documentação oficial do provider OCI](https://registry.terraform.io/providers/oracle/oci/latest/docs) e a documentação do [OCI CLI](https://docs.oracle.com/pt-br/iaas/Content/API/Concepts/cliconcepts.htm).
 
 ## Estrutura do diretório
 
-```
+```text
 terraform/
-|   └── modules/
-|       └── oci_production/   # módulo de produção
-|           ├── backend.tf    # configurações do backend externo
-|           └── main.tf       # configuração do módulo
-├── compartment.tf            # definições de compartimentos
-├── compute.tf                # definições de instância de computação
-├── network.tf                # definições de rede
-├── outputs.tf                # Saídas
-├── providers.tf              # configuração do provider OCI
-├── security.tf               # definições de listas de segurança
-├── storage.tf                # definições de armazenamento
-└── variables.tf              # definição de variáveis
+├── backend.tf              # backend OCI do Terraform
+├── main.tf                 # instancia o módulo oci_production
+├── outputs.tf              # exporta saída do módulo
+├── providers.tf            # provider OCI e versionamento
+├── variables.tf            # variáveis do projeto raiz
+└── modules/
+    └── oci_production/
+        ├── compartment.tf     # compartment da aplicação
+        ├── compute.tf         # instância OCI
+        ├── network.tf         # VCN, subnet, gateway e rota
+        ├── outputs.tf         # saída pública da instância
+        ├── security.tf        # security list com HTTP/HTTPS
+        ├── storage.tf         # bucket de Object Storage
+        ├── variables.tf       # variáveis do módulo
+        └── versions.tf        # versionamento do provider
 ```
+
+## O que esse Terraform provisiona
+
+O módulo `oci_production` cria os recursos abaixo:
+
+- `oci_identity_compartment.this`: compartment para a aplicação
+- `oci_core_vcn.this`: VCN da infraestrutura
+- `oci_core_subnet.public`: subnet pública
+- `oci_core_internet_gateway.this`: gateway de internet
+- `oci_core_default_route_table.this`: rota padrão para internet
+- `oci_core_security_list.this`: regras de acesso HTTP e HTTPS
+- `oci_objectstorage_bucket.this`: bucket de Object Storage
+- `oci_core_instance.this`: instância compute com IP público e chave SSH autorizada
+
+A saída principal do root module é `oci_production_public_ip`, exportada em [terraform/outputs.tf](../terraform/outputs.tf).
 
 ## Requisitos para execução
 
-- Conta na Oracle Cloud Infraestructure (OCI)
-- Tenancy configurada
-- Usuário com permissões para executar ações na OCI
-- Chave de API criada ([consulte artigo](https://www.oracle.com/br/technical-resources/articles/cloudcomp/utilizando-oci-cli-p1.html))
+- Conta e tenancy na Oracle Cloud Infrastructure (OCI)
+- Usuário IAM com permissão para criar recursos
+- Chave API OCI configurada
+- Terraform version `>= 1.6.0`
+- Provider `oracle/oci` com versão aproximada a `~> 9.3`
 
-## Execução automatizada (GitHub Actions)
+## Variáveis esperadas
 
-### Variáveis de configuração
+As variáveis definidas no root module estão em [terraform/variables.tf](../terraform/variables.tf) e o módulo filho em [terraform/modules/oci_production/variables.tf](../terraform/modules/oci_production/variables.tf).
 
-Configure os seguintes `secrets` no repositório:
+### Obrigatórias
 
-| Secret | Descrição | Exemplo | Obrigatório |
-|--------|-----------|---------|-------------|
-| `TENANCY_OCID` | OCID do tenancy | `ocid1.tenancy.oc1..aaaaaaa...` |Sim |
-| `USER_OCID` | OCID do usuário | `ocid1.user.oc1..aaaaaaa...` | Sim |
-| `KEY_FINGERPRINT` | Fingerprint da chave API | `aa:bb:cc:dd:...` | Sim |
-| `PRIVATE_KEY` | Chave privada API | (conteúdo da chave PEM) | Sim |
-| `REGION` | Região OCI | `us-sanjose-1` | Sim |
-| `COMPARTMENT_NAME` | Nome do compartment | `Nome do Compartimento` | Sim |
-| `VNC_CIDR_BLOCKS` | Blocos CIDR da VCN | `172.16.0.0/16` | Sim |
-| `VNC_DISPLAY_NAME` | Nome de exibição da VCN | `Nome da VCN` | Sim |
-| `VCN_DNS_LABEL` | Label DNS da VCN | `labelvnc` | Sim |
-| `PUBLIC_SUBNET_CIDR_BLOCK` | CIDR da subnet pública | `172.16.10.0/24` | Sim |
-| `HTTP_PORT` | CIDR da subnet pública | `8080` | Sim |
-| `HTTPS_PORT` | CIDR da subnet pública | `8443` | Sim |
-| `OS_NAMESPACE` | Nome do bucket | `e3ncabyyyxs4` | Sim |
-| `BUCKET_NAME` | Nome do bucket | `Nome do Bucket` | Sim |
-| `INSTANCE_AVAILABILITY_DOMAIN` | Domínio de disponibilidade | `Uocm:PHX-AD-1` | Sim |
-| `INSTANCE_SHAPE` | Shape da instância | `VM.Standard.E6.Ax.Flex` | Sim |
-| `OPERATING_SYSTEM` | Sistema operacional | `Canonical Ubuntu` | Sim |
-| `OPERATING_SYSTEM_VERSION` | Versão do SO | `24.04` | Sim |
-| `SSH_PUBLIC_KEY` | Chave pública SSH | `ssh-ed25519 pA7UVPcJE/VfjyVs9NH... email@host` | Sim |
-| `INSTANCE_CREATE_VNIC_DETAILS_HOSTNAME_LABEL` | Hostname da instância | `oci-srv` | Sim |
-| `INSTANCE_DISPLAY_NAME` | Nome da instância | `Instancia` | Sim |
+- `region`
+- `tenancy_ocid`
+- `user_ocid`
+- `fingerprint`
+- `private_key`
+- `private_key_password`
+- `compartment_name`
+- `vcn_cidr_blocks`
+- `vcn_display_name`
+- `vcn_dns_label`
+- `public_subnet_cidr_block`
+- `bucket_name`
+- `instance_availability_domain`
+- `instance_shape`
+- `instance_display_name`
+- `instance_create_vnic_details_hostname_label`
+- `operating_system`
+- `operating_system_version`
+- `ssh_public_key`
 
-## Execução manual (Local)
+### Opcionais com valor padrão
 
-Em caso de execução manual, escolha uma das opções abaixo. Antes de executar o Terraform, configure o OCI CLI e substitua os valores `{{ secrets... }}` no arquivo `terraform/modules/oci_production/main.tf` pelos valores corretos do seu ambiente.
+- `compartment_description` = `Compartment for applications`
+- `http_port` = `80`
+- `https_port` = `443`
+- `bucket_access_type` = `NoPublicAccess`
+- `bucket_storage_tier` = `Standard`
 
-### Sem backend remoto
+## Arquivo de ambiente de exemplo
 
-Nesta opção, o arquivo de estado (`terraform.tfstate`) é mantido localmente no diretório do módulo. Remova ou renomeie o  arquivo `terraform/modules/oci_production/backend.tf` e execute:
+O exemplo de variáveis pode ser consultado em [docs/samples/.env.example](samples/.env.example). Esse arquivo usa o padrão do Terraform para leitura automática de variáveis do ambiente, com prefixo `TF_VAR_`:
 
 ```bash
-cd terraform/modules/oci_production
-terraform init
-terraform plan
-terraform apply
+TF_VAR_region="sa-saopaulo-1"
+TF_VAR_tenancy_ocid="ocid1.tenancy.oc1..aaaa..."
+TF_VAR_user_ocid="ocid1.user.oc1..aaaa..."
+TF_VAR_fingerprint="AA:BB:CC:..."
+TF_VAR_private_key="$(cat ~/.oci/oci_api_key.pem)"
+TF_VAR_private_key_password="Yxirom3TXF4wNUK"
+TF_VAR_compartment_name="dokuwiki-prod"
+TF_VAR_vcn_cidr_blocks='["10.0.0.0/16"]'
+TF_VAR_vcn_display_name="dokuwiki-vcn"
+TF_VAR_vcn_dns_label="dokuwiki"
+TF_VAR_public_subnet_cidr_block="10.0.0.0/24"
+TF_VAR_bucket_name="dokuwiki-bucket"
+TF_VAR_instance_availability_domain="..."
+TF_VAR_instance_shape="VM.Standard.E4.Flex"
+TF_VAR_instance_display_name="dokuwiki-instance"
+TF_VAR_instance_create_vnic_details_hostname_label="dokuwiki"
+TF_VAR_operating_system="Canonical Ubuntu"
+TF_VAR_operating_system_version="24.04"
+TF_VAR_ssh_public_key="ssh-rsa AAAA..."
 ```
 
-Para destruir os recursos criados, use `terraform destroy`. Não exclua o arquivo de estado durante a execução, pois ele é necessário para que o Terraform acompanhe os recursos existentes.
+## Execução local
 
-### Com backend remoto (OCI)
+A execução local deve ser feita a partir do diretório `terraform/`.
 
-Nesta opção, o estado é armazenado em um bucket do Object Storage. O bucket precisa ser criado **antes** do `terraform init`; caso contrário, a inicialização do backend falhará. O backend configurado neste projeto usa o bucket `bt-terraform` e uma chave específica por ambiente.
-
-Obtenha o namespace do object storage e crie o bucket na tenancy, ou compartment escolhido, informando o OCID da tenancy, a região e o nome desejado:
+### 1) Preparar o ambiente
 
 ```bash
-export TENANCY_OCID="ocid1.tenancy.oc1..aaaa..."
-export REGION="us-sanjose-1"
-export NAMESPACE="$(oci os ns get --query 'data' --raw-output)"
-export TFSTATE_BUCKET="bucket-terraform"
+cd terraform
+set -a
+source /caminho/para/.env
+set +a
+```
+
+> O arquivo `.env` deve conter as variáveis com prefixo `TF_VAR_` para que o Terraform as reconheça automaticamente.
+
+### 2) Inicializar o backend e o provider
+
+Quando o backend OCI é usado, o bucket do backend precisa existir antes do `terraform init`:
+
+```bash
+export TF_VAR_namespace="$(oci os ns get --query 'data' --raw-output)"
+export TF_VAR_backend_bucket="bucket-terraform"
+export TF_VAR_backend_key="dokuwiki/terraform.tfstate"
 
 oci os bucket create \
-	--compartment-id "$TENANCY_OCID" \
-	--name "$TFSTATE_BUCKET" \
-	--namespace-name "$NAMESPACE" \
-	--region "$REGION" \
-	--public-access-type NoPublicAccess \
-	--storage-tier Standard
+  --compartment-id "$TF_VAR_tenancy_ocid" \
+  --name "$TF_VAR_backend_bucket" \
+  --namespace-name "$TF_VAR_namespace" \
+  --region "$TF_VAR_region" \
+  --public-access-type NoPublicAccess \
+  --storage-tier Standard
 ```
 
-O nome do bucket deve ser único dentro do namespace. Se o bucket já existir, não é necessário criá-lo novamente. Em seguida, ajuste `terraform/modules/oci_production/backend.tf` com os valores locais:
+Em seguida:
+
+```bash
+cd terraform
+
+terraform init \
+  -backend-config="bucket=$TF_VAR_backend_bucket" \
+  -backend-config="key=$TF_VAR_backend_key" \
+  -backend-config="region=$TF_VAR_region" \
+  -backend-config="namespace=$TF_VAR_namespace" \
+  -backend-config="private_key=$TF_VAR_private_key" \
+  -backend-config="private_key_password=$TF_VAR_private_key_password" \
+  -reconfigure
+```
+
+### 3) Validar e aplicar
+
+```bash
+terraform plan -out=tfplan
+terraform apply tfplan
+```
+
+Para destruir os recursos:
+
+```bash
+terraform destroy
+```
+
+## Observação sobre o backend
+
+O arquivo [terraform/backend.tf](../terraform/backend.tf) usa:
 
 ```hcl
 terraform {
-	backend "oci" {
-		bucket    = "bucket-terraform"
-		key       = "oci_production/terraform.tfstate"
-		region    = "us-sanjose-1"
-		namespace = "<namespace-do-object-storage>"
-	}
+  backend "oci" {}
 }
 ```
 
-Depois, inicialize o módulo e confirme a migração ou configuração do estado:
-
-```bash
-cd terraform/modules/oci_production
-terraform init -reconfigure
-terraform plan
-terraform apply
-```
-
-Para remover os recursos, use `terraform destroy`. O bucket do backend e o arquivo de estado não devem ser removidos como parte dessa operação.
+Ou seja, o backend é configurado via parâmetros de inicialização (`-backend-config`) e não por variáveis do Terraform como `backend_bucket` ou `backend_key` declaradas no código.

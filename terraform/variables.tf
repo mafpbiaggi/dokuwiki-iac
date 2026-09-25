@@ -30,6 +30,12 @@ variable "private_key" {
   sensitive   = true
 }
 
+variable "private_key_password" {
+  type        = string
+  description = "Senha da chave privada da API Key OCI (PEM)."
+  sensitive   = true
+}
+
 # -----------------------------------------------------------
 # Compartment
 # -----------------------------------------------------------
