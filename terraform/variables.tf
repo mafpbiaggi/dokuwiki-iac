@@ -1,116 +1,142 @@
 # -----------------------------------------------------------
-# General variables
+# General
 # -----------------------------------------------------------
 variable "region" {
-  type    = string
-  default = "sa-saopaulo-1"
-  sensitive = true
+  type        = string
+  description = "Região OCI onde os recursos serão provisionados."
+}
+
+variable "tenancy_ocid" {
+  type        = string
+  description = "OCID do tenancy OCI."
+  sensitive   = true
+}
+
+variable "user_ocid" {
+  type        = string
+  description = "OCID do usuário/IAM usado pela API Key."
+  sensitive   = true
+}
+
+variable "fingerprint" {
+  type        = string
+  description = "Fingerprint da API Key do usuário OCI."
+  sensitive   = true
+}
+
+variable "private_key" {
+  type        = string
+  description = "Conteúdo da chave privada da API Key OCI (PEM)."
+  sensitive   = true
 }
 
 # -----------------------------------------------------------
-# Compartment variables
+# Compartment
 # -----------------------------------------------------------
-variable "tenancy_ocid" {
-  type    = string
-  sensitive = true
+variable "compartment_name" {
+  type        = string
+  description = "Nome do compartment de produção."
 }
 
 variable "compartment_description" {
-  type = string
-  sensitive = true
-}
-
-variable "compartment_name" {
-  type = string
-  sensitive = true
+  type        = string
+  description = "Descrição do compartment de produção."
+  default = "Compartment for applications"
 }
 
 # -----------------------------------------------------------
-# Network variables
-# -------------------------------------------------------
+# Network
+# -----------------------------------------------------------
 variable "vcn_cidr_blocks" {
-  type = list
-  sensitive = true
+  type        = list(string)
+  description = "Lista de blocos CIDR da VCN."
 }
 
 variable "vcn_display_name" {
-  type = string
-  sensitive = true
+  type        = string
+  description = "Nome de exibição da VCN."
 }
 
 variable "vcn_dns_label" {
-  type = string
-  sensitive = true
+  type        = string
+  description = "DNS label da VCN."
 }
 
 variable "public_subnet_cidr_block" {
-  type = string
-  sensitive = true
+  type        = string
+  description = "Bloco CIDR da subnet pública."
 }
 
 # -----------------------------------------------------------
-# Security variables
+# Security
 # -----------------------------------------------------------
 variable "http_port" {
-  type = string
-  sensitive = true
+  type        = number
+  description = "Porta HTTP liberada na security list."
+  default     = 80
 }
 
 variable "https_port" {
-  type = string
-  sensitive = true
+  type        = number
+  description = "Porta HTTPS liberada na security list."
+  default     = 443
 }
 
 # -----------------------------------------------------------
-# Bucket variables
+# Storage
 # -----------------------------------------------------------
 variable "bucket_name" {
-  type = string
-  sensitive = true
+  type        = string
+  description = "Nome do bucket de Object Storage."
 }
 
 variable "bucket_access_type" {
-  type = string
+  type        = string
+  description = "Tipo de acesso do bucket (ex.: NoPublicAccess, ObjectRead)."
+  default     = "NoPublicAccess"
 }
 
 variable "bucket_storage_tier" {
-  type = string
+  type        = string
+  description = "Tier de armazenamento do bucket (Standard ou Archive)."
+  default     = "Standard"
 }
 
 # -----------------------------------------------------------
-# Instance variables
+# Compute
 # -----------------------------------------------------------
 variable "instance_availability_domain" {
-  type = string
-  sensitive = true
+  type        = string
+  description = "Availability domain da instância."
 }
 
 variable "instance_shape" {
-  type = string
-  sensitive = true
-}
-
-variable "operating_system" {
-  type = string
-  sensitive = true
-}
-
-variable "operating_system_version" {
-  type = string
-  sensitive = true
-}
-
-variable "ssh_public_key" {
-  type = string
-  sensitive = true
-}
-
-variable "instance_create_vnic_details_hostname_label" {
-  type = string
-  sensitive = true
+  type        = string
+  description = "Shape da instância compute."
 }
 
 variable "instance_display_name" {
-  type = string
-  sensitive = true
+  type        = string
+  description = "Nome de exibição da instância."
+}
+
+variable "instance_create_vnic_details_hostname_label" {
+  type        = string
+  description = "Hostname label da VNIC da instância."
+}
+
+variable "operating_system" {
+  type        = string
+  description = "Sistema operacional da imagem (ex.: Canonical Ubuntu)."
+}
+
+variable "operating_system_version" {
+  type        = string
+  description = "Versão do sistema operacional da imagem."
+}
+
+variable "ssh_public_key" {
+  type        = string
+  description = "Chave pública SSH autorizada na instância."
+  sensitive   = true
 }
