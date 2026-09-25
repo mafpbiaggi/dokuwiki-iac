@@ -70,12 +70,8 @@ jobs:
         run: terraform plan -out=tfplan
 
       - name: Terraform apply
-        run: |
-          terraform apply -auto-approve tfplan | grep -v -E \
-            "Refreshing state\.\.\.|Reading\.\.\.|Read complete after|\
-            Creating\.\.\.|Still creating\.\.\.|Creation complete after|\
-            Modifying\.\.\.|Still modifying\.\.\.|Modifications complete after"
+        run: terraform apply -auto-approve tfplan
 
       - name: Read Terraform output
         id: tf_output
-        run: echo "public_ip=$(terraform output -raw instance_public_ip)" >> "$GITHUB_OUTPUT"
+        run: echo "public_ip=$(terraform output -raw oci_production_public_ip)" >> "$GITHUB_OUTPUT"

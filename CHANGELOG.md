@@ -2,6 +2,12 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+  ## [1.3.2] - 2026-09-25
+
+  ### Corrigido
+  - Continuous Delivery: correção de leitura do Terraform output.
+    - Substituição do nome correto do output de ip público.
+
   ## [1.3.1] - 2026-09-25
 
   ### Adicionado
@@ -60,3 +66,5 @@
   [1.0.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.0.0
   [1.1.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.1.0
   [1.2.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.2.1
+  [1.3.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.3.1
+  [1.3.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.3.2
