@@ -2,6 +2,19 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+  ## [1.5.0] - 2026-09-28
+  
+  ### Adicionado
+  - Workflow de deploy via GitHub Actions (`.github/workflows/deploy.yml`)
+    - Execução automatizada do playbook Ansible na instância provisionada
+    - Configuração de variáveis de ambiente via secrets
+    - Validação com ansible-lint e syntax check
+  - Script de verificação de prontidão da instância (`tests/instance_check.sh`)
+    - Aguarda SSH estar disponível antes de prosseguir com o deploy
+  
+  ### Modificado
+  - Ansible: adiciona configuração `host_key_checking = False` no ansible.cfg
+  
   ## [1.4.2] - 2026-09-28
 
   ### Adicionado

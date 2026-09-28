@@ -7,3 +7,10 @@ jobs:
   infra-provision:
     uses: ./.github/workflows/infra-provision.yml
     secrets: inherit
+
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    needs: infra-provision
+    secrets: inherit
+    with:
+      instance_public_ip: ${{ needs.infra-provision.outputs.instance_public_ip }}

@@ -1,0 +1,77 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      instance_public_ip:
+        description: IP público da instância provisionada
+        required: true
+        type: string
+
+  workflow_dispatch:
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./ansible
+
+    env:
+      HOST: ${{ inputs.instance_public_ip }}
+      INSTANCE_USER: ${{ secrets.INSTANCE_USER}}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      REGION: ${{ secrets.REGION }}
+      TENANCY_OCID: ${{ secrets.TENANCY_OCID }}
+      USER_OCID: ${{ secrets.USER_OCID }}
+      FINGERPRINT: ${{ secrets.FINGERPRINT }}
+      PRIVATE_API_KEY: ${{ secrets.PRIVATE_KEY }}
+      PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD}}
+      BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+      OBJECT_NAME: ${{ secrets.OBJECT_NAME }}
+      OBJECT_NAME_FILE: ${{ secrets.OBJECT_NAME_FILE }}
+      PERSISTENT_DIR: ${{ secrets.PERSISTENT_DIR }}
+      CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+      VOL_CONF_NAME: ${{ secrets.VOL_CONF_NAME }}
+      VOL_DATA_NAME: ${{ secrets.VOL_DATA_NAME }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Create SSH key file
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/ssh_key
+          chmod 600 ~/.ssh/ssh_key
+
+      - name: Setup Python
+        uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13'
+
+      - name: Install Ansible
+        run: pip install ansible ansible-lint 
+
+      - name: Install Ansible requirements
+        run: ansible-galaxy install -r requirements.yml
+
+      - name: Setup Ansible lint
+        uses: bec-galaxy/setup-lint@v1
+
+      - name: Run lint tests
+        run: ansible-lint playbook.yml
+
+      - name: Syntax check
+        run: ansible-playbook playbook.yml -i hosts.yml --syntax-check
+
+      - name: Wait instance full creation
+        run: bash ../tests/instance_check.sh
+
+      - name: Run production playbook
+        run: |
+          ansible-playbook playbook.yml \
+            -i hosts.yml \
+            -u "$INSTANCE_USER" \
+            --private-key "~/.ssh/ssh_key"
