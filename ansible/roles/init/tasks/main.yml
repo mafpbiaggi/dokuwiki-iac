@@ -1,0 +1,13 @@
+---
+- name: Install default packages
+  ansible.builtin.dnf:
+    pkg:
+      - bash-completion
+      - vim
+      - git
+      - curl
+      - unzip
+      - bzip2
+    update_cache: true
+  become: true
+  tags: [init, _install_default_pkgs]

@@ -1,0 +1,95 @@
+---
+- name: Extract file
+  ansible.builtin.unarchive:
+    src: "{{ ansible_facts.user_dir }}/{{ object_file_name }}"
+    dest: "{{ ansible_facts.user_dir }}"
+    remote_src: true
+
+- name: Copy persistent volume content (conf/)
+  ansible.builtin.command:
+    cmd: "docker cp -q {{ ansible_facts.user_dir }}/{{ persistent_dir }}/conf/. {{ container_name }}:{{ container_conf_dir }}"
+  become: true
+  register: persistent_copy_conf
+  changed_when: persistent_copy_conf.rc != 0
+
+- name: Check path for volume conf/
+  community.docker.docker_volume_info:
+    name: "{{ volume_conf_name }}"
+  become: true
+  register: persistent_vol_conf_result
+
+- name: Fix ownership for files and directories (conf/)
+  ansible.builtin.file:
+    path: "{{ persistent_vol_conf_result.volume.Mountpoint }}"
+    state: directory
+    recurse: true
+    owner: 33
+    group: 33
+  become: true
+  when: persistent_vol_conf_result.exists
+
+- name: Fix permissions on conf/
+  ansible.builtin.shell:
+    cmd: |
+      find {{ persistent_vol_conf_result.volume.Mountpoint }} -type f -exec chmod 660 '{}' \;
+      find {{ persistent_vol_conf_result.volume.Mountpoint }} -type d -exec chmod 770 '{}' \;
+  become: true
+  when: persistent_vol_conf_result.exists
+  register: persistent_perm_conf
+  changed_when: persistent_perm_conf.rc != 0
+
+- name: Copy persistent volume content (data/)
+  ansible.builtin.command:
+    cmd: "docker cp -q {{ ansible_facts.user_dir }}/{{ persistent_dir }}/data/. {{ container_name }}:{{ container_data_dir }}"
+  become: true
+  register: persistent_copy_data
+  changed_when: persistent_copy_data.rc != 0
+
+- name: Check path for volume data/
+  community.docker.docker_volume_info:
+    name: "{{ volume_data_name }}"
+  become: true
+  register: persistent_vol_data_result
+
+- name: Fix ownership for files and directories (data/)
+  ansible.builtin.file:
+    path: "{{ persistent_vol_data_result.volume.Mountpoint }}"
+    state: directory
+    recurse: true
+    owner: 33
+    group: 33
+  become: true
+  when: persistent_vol_data_result.exists
+
+- name: Fix permissions on data/
+  ansible.builtin.shell:
+    cmd: |
+      find {{ persistent_vol_data_result.volume.Mountpoint }} -type f -exec chmod 660 '{}' \;
+      find {{ persistent_vol_data_result.volume.Mountpoint }} -type d -exec chmod 770 '{}' \;
+  become: true
+  when: persistent_vol_data_result.exists
+  register: persistent_perm_data
+  changed_when: persistent_perm_data.rc != 0
+
+- name: Check if custom logo exists
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.user_dir }}/{{ persistent_dir }}/logo.png"
+  register: persistent_logo_check
+
+- name: Copy persistent volume content (logo)
+  ansible.builtin.command:
+    cmd: docker cp -q {{ ansible_facts.user_dir }}/{{ persistent_dir }}/logo.png {{ container_name }}:{{ container_logo_path }}
+  when: persistent_logo_check.stat.exists
+  become: true
+  register: persistent_copy_logo
+  changed_when: persistent_copy_logo.rc != 0
+
+- name: Rename object used for deploy
+  ansible.builtin.shell:
+    cmd: |
+      oci os object rename \
+        --bucket-name "{{ bucket_name }}" \
+        --source-name "{{ object_name }}" \
+        --new-name "deployed_$(TZ='America/Sao_Paulo' date '+%d-%m-%y_%H%M%S')"
+  register: persistent_rename_object
+  changed_when: persistent_rename_object.rc != 0

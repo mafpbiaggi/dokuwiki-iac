@@ -2,6 +2,19 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+  ## [1.4.2] - 2026-09-28
+
+  ### Adicionado
+  - Automação completa de configuração do ambiente com Ansible
+    - Playbook principal e configuração de inventário
+    - Roles: init (pacotes), requirements (OCI CLI + Docker), persistent (dados), deploy
+  (container)
+    - Documentação completa em `docs/Ansible.md`
+    - Exemplo de variáveis de ambiente em `docs/samples/.env.example`
+  
+  ### Modificado
+  - README.md: adicionada seção de documentação do Ansible
+
   ## [1.3.2] - 2026-09-25
 
   ### Corrigido
@@ -68,3 +81,4 @@
   [1.2.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.2.1
   [1.3.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.3.1
   [1.3.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.3.2
+  [1.4.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.4.2

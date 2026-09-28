@@ -1,0 +1,8 @@
+---
+- name: Oci_production
+  hosts: oci_production
+  roles:
+    - init
+    - requirements
+    - deploy
+    - persistent

@@ -1,0 +1,30 @@
+---
+- name: Check if persistent data exists on bucket
+  ansible.builtin.command:
+    cmd: oci os object head --bucket-name "{{ bucket_name }}" --name "{{ object_name }}"
+  register: persistent_object_check
+  failed_when: false
+  changed_when: false
+  tags: [persistent, check_data_object]
+
+- name: Get persistent data from bucket
+  ansible.builtin.command:
+    chdir: "{{ ansible_facts.user_dir }}"
+    cmd: oci os object get --bucket-name "{{ bucket_name }}" --name "{{ object_name }}" --file "{{ object_file_name }}"
+  when: persistent_object_check.rc == 0
+  notify:
+    - Extract file
+    - Copy persistent volume content (conf/)
+    - Check path for volume conf/
+    - Fix ownership for files and directories (conf/)
+    - Fix permissions on conf/
+    - Copy persistent volume content (data/)
+    - Check path for volume data/
+    - Fix ownership for files and directories (data/)
+    - Fix permissions on data/
+    - Check if custom logo exists
+    - Copy persistent volume content (logo)
+    - Rename object used for deploy
+  register: persistent_object_get
+  changed_when: persistent_object_get.rc == 0
+  tags: [persistent, check_data_object]
