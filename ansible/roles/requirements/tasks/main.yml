@@ -1,0 +1,83 @@
+---
+- name: Create .oci directory
+  ansible.builtin.file:
+    path: "{{ ansible_facts.user_dir }}/.oci"
+    state: directory
+    mode: '0755'
+  tags: [requirements, oci, create_oci_dir]
+
+- name: Get oci cli installation script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+    dest: "{{ ansible_facts.user_dir }}/.oci/install.sh"
+    checksum: "{{ cli_checksum }}"
+    mode: "0664"
+  tags: [requirements, oci, get_oci_cli]
+
+- name: Install oci cli
+  ansible.builtin.shell:
+    cmd: |
+      bash {{ ansible_facts.user_dir }}/.oci/install.sh \
+        --install-dir "{{ ansible_facts.user_dir }}/.oci/lib/oracle-cli" \
+        --exec-dir "{{ ansible_facts.user_dir }}/.oci/bin" \
+        --script-dir "{{ ansible_facts.user_dir }}/.oci/bin/oci-cli-scripts" \
+        --accept-all-defaults
+    creates: "{{ ansible_facts.user_dir }}/.oci/bin/oci"
+  tags: [requirements, oci, install_oci_cli]
+
+- name: Set oci_api_key
+  ansible.builtin.template:
+    src: oci_api_key.pem.j2
+    dest: "{{ ansible_facts.user_dir }}/.oci/oci_api_key.pem"
+    mode: "0600"
+  tags: [requirements, oci, oci_api_key]
+
+- name: Configure oci cli
+  ansible.builtin.template:
+    src: oci_cli_config.j2
+    dest: "{{ ansible_facts.user_dir }}/.oci/config"
+    mode: "0600"
+  tags: [requirements, oci, oci_config]
+
+- name: Install docker dependencies
+  ansible.builtin.dnf:
+    name: dnf-plugins-core
+    state: present
+    update_cache: true
+  become: true
+  tags: [requirements, docker, docker_install_deps]
+
+- name: Configure docker repo
+  ansible.builtin.command:
+    cmd: dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+    creates: /etc/yum.repos.d/docker-ce.repo
+  become: true
+  tags: [requirements, docker, docker_config_repo]
+
+- name: Install docker
+  ansible.builtin.dnf:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    update_cache: true
+  become: true
+  tags: [requirements, docker, docker_install]
+
+- name: Configure docker service on boot
+  ansible.builtin.systemd_service:
+    name: docker
+    state: started
+    enabled: true
+  become: true
+  tags: [requirements, docker, docker_config_unit]
+
+- name: Configure docker without sudo
+  ansible.builtin.user:
+    name: "{{ ansible_facts.user_id }}"
+    groups: docker
+    append: true
+  become: true
+  tags: [requirements, docker, docker_config_user]

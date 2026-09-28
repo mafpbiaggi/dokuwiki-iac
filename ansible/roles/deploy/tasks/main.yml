@@ -1,0 +1,19 @@
+---
+- name: Get docker image
+  community.docker.docker_image_pull:
+    name: "{{ docker_image }}"
+    pull: "not_present"
+  become: true
+  tags: [deploy, get_docker_img]
+
+- name: Create/Start container
+  community.docker.docker_container:
+    name: "{{ container_name }}"
+    image: "{{ docker_image }}"
+    ports: 80:80
+    restart_policy: "always"
+    volumes:
+      - "{{ volume_conf_name }}:{{ container_conf_dir }}"
+      - "{{ volume_data_name }}:{{ container_data_dir }}"
+  become: true
+  tags: [deploy, docker_run]

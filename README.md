@@ -46,3 +46,16 @@ Consulte a [documentação completa](docs/Terraform.md) para detalhes sobre:
 - Variáveis de configuração
 - Configuração de secrets para GitHub Actions
 - Uso e comandos do Terraform
+
+## Ansible
+
+O diretório `ansible/` contém a automação de configuração do ambiente remoto para execução do Dokuwiki.
+
+Consulte a [documentação completa](docs/Ansible.md) para detalhes sobre:
+
+- Estrutura do diretório e roles
+- Playbook principal e execução
+- Inventário, variáveis e autenticação OCI
+- Instalação de dependências e configuração do Docker
+- Persistência de dados e deploy da aplicação
+- Boas práticas de segurança e troubleshooting

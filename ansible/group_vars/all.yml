@@ -1,0 +1,31 @@
+---
+# Instace
+instance_user: "{{ lookup('ansible.builtin.env', 'INSTANCE_USER') }}"
+host: "{{ lookup('ansible.builtin.env', 'HOST') }}"
+
+# OCI CLI - @master
+cli_checksum: sha256:079dcc9a3e2a61ec692400e30169c9996b2998ac8c4e205198ed5863283fcb76
+private_api_key: "{{ lookup('ansible.builtin.env', 'PRIVATE_API_KEY') }}"
+
+# OCI Config
+user_ocid: "{{ lookup('ansible.builtin.env', 'USER_OCID') }}"
+fingerprint: "{{ lookup('ansible.builtin.env', 'FINGERPRINT') }}"
+key_file: "/home/{{ instance_user }}/.oci/oci_api_key.pem"
+tenancy_ocid: "{{ lookup('ansible.builtin.env', 'TENANCY_OCID') }}"
+region: "{{ lookup('ansible.builtin.env', 'REGION') }}"
+pass_phrase: "{{ lookup('ansible.builtin.env', 'PRIVATE_KEY_PASSWORD') }}"
+
+# Object storage
+bucket_name: "{{ lookup('ansible.builtin.env', 'BUCKET_NAME') }}"
+object_name: "{{ lookup('ansible.builtin.env', 'OBJECT_NAME') }}"
+object_file_name: "{{ lookup('ansible.builtin.env', 'OBJECT_NAME_FILE') }}"
+
+# Docker
+docker_image: ghcr.io/mafpbiaggi/dokuwiki:2026-07-14c
+container_name: "{{ lookup('ansible.builtin.env', 'CONTAINER_NAME') }}"
+volume_conf_name: "{{ lookup('ansible.builtin.env', 'VOL_CONF_NAME') }}"
+volume_data_name: "{{ lookup('ansible.builtin.env', 'VOL_DATA_NAME') }}"
+persistent_dir: "{{ lookup('ansible.builtin.env', 'PERSISTENT_DIR') }}"
+container_conf_dir: /var/www/html/conf/
+container_data_dir: /var/www/html/data/
+container_logo_path: /var/www/html/lib/tpl/dokuwiki/images/logo.png
