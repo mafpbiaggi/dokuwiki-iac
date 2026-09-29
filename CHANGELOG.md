@@ -2,6 +2,13 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+  ## [1.5.1] - 2026-09-29
+
+  ### Modificado
+  - Workflow de deploy via GitHub Actions (`.github/workflows/deploy.yml`)
+    - Remoção de setup do ansible-lint via actions. Ele já está sendo instalado via pip
+    - Configuração das variáveis de ambiente somente nos steps necessários
+
   ## [1.5.0] - 2026-09-28
   
   ### Adicionado
@@ -95,3 +102,5 @@
   [1.3.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.3.1
   [1.3.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.3.2
   [1.4.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.4.2
+  [1.5.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.5.0
+  [1.5.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.5.1
