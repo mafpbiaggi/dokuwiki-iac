@@ -154,18 +154,18 @@
   - Credenciais externalizadas via secrets do GitHub Actions
   - Autenticação via API Key com rotação recomendada
   
-  [Unreleased]: https://github.com/mafpbiaggi/dokuwiki-iac/compare/v1.0.0...HEAD
-  [1.0.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.0.0
-  [1.1.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.1.0
-  [1.2.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.2.1
-  [1.3.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.3.1
-  [1.3.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.3.2
-  [1.4.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.4.2
-  [1.5.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.5.0
-  [1.5.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.5.1
-  [1.6.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.0
-  [1.6.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.1
-  [1.6.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.2
-  [1.6.3]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.3
-  [1.7.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.7.0
-  [1.7.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.7.1
+  [Unreleased]: https://github.com/mafpbiaggi/dokuwiki-iac/compare/1.0.0...HEAD
+  [1.0.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.0.0
+  [1.1.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.1.0
+  [1.2.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.2.1
+  [1.3.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.3.1
+  [1.3.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.3.2
+  [1.4.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.4.2
+  [1.5.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.5.0
+  [1.5.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.5.1
+  [1.6.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.6.0
+  [1.6.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.6.1
+  [1.6.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.6.2
+  [1.6.3]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.6.3
+  [1.7.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.7.0
+  [1.7.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.7.1
