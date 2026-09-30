@@ -7,8 +7,6 @@ on:
         description: IP público da instância provisionada
         value: ${{ jobs.provision.outputs.instance_public_ip }}
 
-  workflow_dispatch:
-
 defaults:
   run:
     working-directory: ./terraform
