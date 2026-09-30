@@ -47,7 +47,7 @@ variable "compartment_name" {
 variable "compartment_description" {
   type        = string
   description = "Descrição do compartment de produção."
-  default = "Compartment for applications"
+  default     = "Compartment for applications"
 }
 
 # -----------------------------------------------------------
