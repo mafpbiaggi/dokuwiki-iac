@@ -2,6 +2,20 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   
+  ## [1.7.0] - 2026-09-30
+
+  ### Adicionado
+  - Workflow de tests via GitHub Actions (`.github/workflows/tests.yml`)
+  - Script de teste (`tests/app_health_check.sh`)
+    - Verifica se o acesso à aplicação ocorre com sucesso ou falha após o deploy
+  - Documentação completa em `docs/Workflows.md`
+  
+  ### Modificado
+  - Continuous Delivery (`.github/workflows/continuous-delivery.yml`)
+    - Adiciona job tests para usar novo workflow `tests.yml`
+    - Remove workflow_dispatch de `infra.yml` e `deploy.yml`
+  - README.md: adicionada seção de documentação do pipeline de CI/CD
+
   ## [1.6.3] - 2026-09-30
 
   ### Modificado
@@ -145,3 +159,4 @@
   [1.6.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.1
   [1.6.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.2
   [1.6.3]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.3
+  [1.7.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.7.0
