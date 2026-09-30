@@ -20,11 +20,16 @@ A ideia é manter o repositório do aplicativo focado no conteúdo e na lógica 
 |   ├── Contributing.md/
 |   └── workflows
 |       ├── continuous-delivery.yml  # orquestração de jobs do pipeline
-|       └── infra-provision.yml      # provionamento da infraestrutura com Terraform
+|       ├── infra.yml                # provionamento da infraestrutura com Terraform
+|       ├── deploy.yml               # configuração da instância e deploy da aplicação com Ansible
+|       └── tests.yml                # testes de saúde da aplicação após deploy
 ├── docs/                            # documentação detalhada sobre recursos específicos
 |   ├── samples                      # arquivos de exemplo
-|   └── Terraform.md                       
+|   ├── Ansible.md
+|   ├── Terraform.md
+|   └── Workflows.md
 ├── terraform/                       # arquivos de infraestrutura como código
+├── tests/                           # scripts de validação e verificação de saúde da aplicação
 ├── CHANGELOG                        # documentação de mudanças no projeto
 └── README.md                        # documentação geral do projeto
 ```
@@ -59,3 +64,15 @@ Consulte a [documentação completa](docs/Ansible.md) para detalhes sobre:
 - Instalação de dependências e configuração do Docker
 - Persistência de dados e deploy da aplicação
 - Boas práticas de segurança e troubleshooting
+
+## Workflows
+
+Os workflows do GitHub Actions automatizam a análise e o provisionamento da infraestrutura, a configuração da instância e a verificação da aplicação.
+
+Consulte a [documentação completa dos workflows](docs/Workflows.md) para detalhes sobre:
+
+- Pipeline de CI/CD e dependências entre jobs
+- Execução e workflows reutilizáveis
+- Secrets, entradas e saídas
+- Verificações do Terraform, Ansible e saúde da aplicação
+- Limitações conhecidas e troubleshooting
