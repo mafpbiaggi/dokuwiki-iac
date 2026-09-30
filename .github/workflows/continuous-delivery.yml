@@ -16,4 +16,4 @@ jobs:
     needs: infra
     secrets: inherit
     with:
-      instance_public_ip: ${{ needs.infra-provision.outputs.instance_public_ip }}
+      instance_public_ip: ${{ needs.infra.outputs.instance_public_ip }}

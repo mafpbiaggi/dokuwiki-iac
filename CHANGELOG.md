@@ -2,6 +2,12 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   
+  ## [1.6.3] - 2026-09-30
+
+  ### Modificado
+  - Workflow de provisionamento (`.github/workflows/continuous-delivery.yml`)
+    - Corrige saída necessária para job deploy.
+
   ## [1.6.2] - 2026-09-30
 
   ### Modificado
@@ -138,3 +144,4 @@
   [1.6.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.0
   [1.6.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.1
   [1.6.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.2
+  [1.6.3]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.3
