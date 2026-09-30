@@ -26,4 +26,12 @@ resource "oci_core_instance" "this" {
     source_id   = data.oci_core_images.this.images[0].id
     source_type = "image"
   }
+
+  instance_options {
+    are_legacy_imds_endpoints_disabled = var.instance_instance_options_are_legacy_imds_endpoints_disabled
+  }
+
+  launch_options {
+    is_pv_encryption_in_transit_enabled = var.instance_is_pv_encryption_in_transit_enabled
+  }
 }
