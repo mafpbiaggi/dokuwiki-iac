@@ -4,13 +4,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  infra-provision:
-    uses: ./.github/workflows/infra-provision.yml
+  infra:
+    uses: ./.github/workflows/infra.yml
+    permissions:
+      contents: read
+      security-events: write
     secrets: inherit
 
   deploy:
     uses: ./.github/workflows/deploy.yml
-    needs: infra-provision
+    needs: infra
     secrets: inherit
     with:
       instance_public_ip: ${{ needs.infra-provision.outputs.instance_public_ip }}
