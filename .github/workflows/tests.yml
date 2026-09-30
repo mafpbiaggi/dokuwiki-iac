@@ -1,0 +1,28 @@
+name: Tests
+
+on:
+  workflow_call:
+    inputs:
+      instance_public_ip:
+        description: IP público da instância provisionada
+        required: true
+        type: string
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./tests
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Check application health status after deploy
+        env:
+          HOST: ${{ inputs.instance_public_ip }}
+          APP_USER: ${{ secrets.APP_USER }}
+          APP_PASS: ${{ secrets.APP_PASS }}
+        run: bash app_health_check.sh $HOST $APP_USER $APP_PASS
