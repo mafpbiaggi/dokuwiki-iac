@@ -2,6 +2,19 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+  ## [1.6.0] - 2026-09-29
+
+  ### Adicionado
+  - Workflow de provisionamento (`.github/workflows/infra.yml`)
+    - Job de scan de segurança com Checkov e upload SARIF para CodeQL
+    - Validação de formatação Terraform com `terraform fmt -check`
+  
+  ### Modificado
+  - Continuous Delivery (`.github/workflows/continuous-delivery.yml`)
+    - Refatora job de provisionamento para usar novo workflow `infra.yml`
+    - Adiciona permissões de segurança (contents, security-events)
+    - Corrige referência de output do job provision
+
   ## [1.5.1] - 2026-09-29
 
   ### Modificado
@@ -104,3 +117,4 @@
   [1.4.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.4.2
   [1.5.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.5.0
   [1.5.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.5.1
+  [1.6.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.0
