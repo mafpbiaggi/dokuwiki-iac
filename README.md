@@ -1,5 +1,7 @@
 # Dokuwiki IaC
 
+[![Continuous Delivery](https://github.com/mafpbiaggi/dokuwiki-iac/actions/workflows/continuous-delivery.yml/badge.svg?branch=main)](https://github.com/mafpbiaggi/dokuwiki-iac/actions/workflows/continuous-delivery.yml)
+
 Este repositório é um complemento para o projeto principal em [github.com/mafpbiaggi/dokuwiki](https://github.com/mafpbiaggi/dokuwiki).
 
 ## Objetivo
