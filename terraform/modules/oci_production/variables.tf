@@ -64,6 +64,16 @@ variable "bucket_storage_tier" {
   default = "Standard"
 }
 
+variable "bucket_object_events_enabled" {
+  type    = bool
+  default = true
+}
+
+variable "bucket_versioning" {
+  type    = string
+  default = "Enabled"
+}
+
 # -----------------------------------------------------------
 # Compute
 # -----------------------------------------------------------
@@ -81,6 +91,16 @@ variable "instance_display_name" {
 
 variable "instance_create_vnic_details_hostname_label" {
   type = string
+}
+
+variable "instance_instance_options_are_legacy_imds_endpoints_disabled" {
+  type    = bool
+  default = true
+}
+
+variable "instance_is_pv_encryption_in_transit_enabled" {
+  type    = bool
+  default = true
 }
 
 variable "operating_system" {

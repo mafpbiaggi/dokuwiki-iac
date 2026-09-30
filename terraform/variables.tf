@@ -108,6 +108,18 @@ variable "bucket_storage_tier" {
   default     = "Standard"
 }
 
+variable "bucket_object_events_enabled" {
+  type        = bool
+  description = "Habilita eventos do bucket (true ou false)."
+  default     = true
+}
+
+variable "bucket_versioning" {
+  type        = string
+  description = "Habilita versionamento do bucket (Enable, Disabled ou Suspended)."
+  default     = "Enabled"
+}
+
 # -----------------------------------------------------------
 # Compute
 # -----------------------------------------------------------
@@ -129,6 +141,18 @@ variable "instance_display_name" {
 variable "instance_create_vnic_details_hostname_label" {
   type        = string
   description = "Hostname label da VNIC da instância."
+}
+
+variable "instance_instance_options_are_legacy_imds_endpoints_disabled" {
+  type        = bool
+  description = "Desabilita Legacy MetaData Service v1."
+  default     = true
+}
+
+variable "instance_is_pv_encryption_in_transit_enabled" {
+  type        = bool
+  description = "Habilita criptografia em trânsito para o pv da instância."
+  default     = true
 }
 
 variable "operating_system" {

@@ -2,6 +2,18 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+  ## [1.6.1] - 2026-09-30
+
+  ### Corrigido
+  - Terraform: Correções de segurança gerados à partir do fmt -chek e checkov
+    - Corrige formatação do arquivo variables.tf
+    - CKV_OCI_1: Ensure no hard coded OCI private key in provider
+    - CKV_OCI_4: Ensure OCI Compute Instance boot volume has in-transit data encryption enabled
+    - CKV_OCI_5: Ensure OCI Compute Instance has Legacy MetaData service endpoint disabled
+    - CKV_OCI_7: Ensure OCI Object Storage bucket can emit object events
+    - CKV_OCI_8: Ensure OCI Object Storage has versioning enabled
+    - CKV_OCI_9: Ensure OCI Object Storage is encrypted with Customer Managed Key (SKIPPED)
+
   ## [1.6.0] - 2026-09-29
 
   ### Adicionado
@@ -118,3 +130,4 @@
   [1.5.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.5.0
   [1.5.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.5.1
   [1.6.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.0
+  [1.6.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/v1.6.1
