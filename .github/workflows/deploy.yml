@@ -7,7 +7,11 @@ on:
         description: IP público da instância provisionada
         required: true
         type: string
-
+    
+    outputs:
+      instance_public_ip:
+        description: IP público da instância provisionada
+        value: ${{ jobs.app.outputs.instance_public_ip }}
 jobs:
   app:
     runs-on: ubuntu-latest
@@ -15,6 +19,9 @@ jobs:
     defaults:
       run:
         working-directory: ./ansible
+
+    outputs:
+      instance_public_ip: ${{ steps.export_ip.outputs.instance_public_ip }}
 
     steps:
       - name: Checkout repository
@@ -73,3 +80,7 @@ jobs:
             -i hosts.yml \
             -u "$INSTANCE_USER" \
             --private-key "~/.ssh/ssh_key"
+        
+      - name: Export public_ip to tests
+        id: export_ip
+        run: echo "instance_public_ip=${{ inputs.instance_public_ip }}" >> "$GITHUB_OUTPUT"
