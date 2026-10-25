@@ -2,6 +2,19 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   
+  ## [1.8.0] - 2026-10-24
+
+  ### Adicionado
+  - Ansible(deploy): Criação de rede e conexão do container
+  - Documentação (`docs/Ansible.md`)
+    - Adiciona variável NETWORK_NAME ao Ansible e também ao arquivo `docs/samples/.env.example`
+  
+  ### Modificado
+  - Ansible(deploy): Executa verificação de ID de imagem (always) para novas versões com mesma tag
+
+  ### Removido
+  - Ansible(deploy): Remove exposição de portas do container para execução em ambiente compartilhado
+  
   ## [1.7.1] - 2026-09-30
 
   ### Corrigido
@@ -169,3 +182,4 @@
   [1.6.3]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.6.3
   [1.7.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.7.0
   [1.7.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.7.1
+  [1.8.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.8.0
