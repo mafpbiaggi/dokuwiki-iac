@@ -160,6 +160,7 @@ Configure os seguintes `secrets` no repositório:
 | `OBJECT_NAME` | Nome do objeto de persistência do Dokuwiki | `dados-dokuwiki` | Sim |
 | `OBJECT_NAME-FILE` | Nome do arquivo de persistência | `arquivo.tgz` | Sim |
 | `CONTAINER_NAME` | Nome do container do Dokuwiki | `dokuwiki` | Sim |
+| `NETWORK_NAME` | Nome da rede do container | `dokuwiki` | Sim |
 | `VOL_CONF_NAME` | Nome do volume de configuração | `conf` | Sim |
 | `VOL_DATA_NAME` | Nome do volume de dados | `data` | Sim |
 | `PERSISTENT_DIR` | Diretório base de persistência | `dados-dokuwiki` | Sim |

@@ -23,6 +23,7 @@ object_file_name: "{{ lookup('ansible.builtin.env', 'OBJECT_NAME_FILE') }}"
 # Docker
 docker_image: ghcr.io/mafpbiaggi/dokuwiki:2026-07-14c
 container_name: "{{ lookup('ansible.builtin.env', 'CONTAINER_NAME') }}"
+network_name: "{{ lookup('ansible.builtin.env', 'NETWORK_NAME') }}"
 volume_conf_name: "{{ lookup('ansible.builtin.env', 'VOL_CONF_NAME') }}"
 volume_data_name: "{{ lookup('ansible.builtin.env', 'VOL_DATA_NAME') }}"
 persistent_dir: "{{ lookup('ansible.builtin.env', 'PERSISTENT_DIR') }}"
