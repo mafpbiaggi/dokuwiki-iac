@@ -2,6 +2,12 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   
+  ## [1.8.1] - 2026-10-24
+
+  ### Modificado
+  - Workflow de deploy (`.github/workflows/deploy.yml`)
+    - Adiciona disparo manual
+
   ## [1.8.0] - 2026-10-24
 
   ### Adicionado
@@ -183,3 +189,4 @@
   [1.7.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.7.0
   [1.7.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.7.1
   [1.8.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.8.0
+  [1.8.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.8.1
