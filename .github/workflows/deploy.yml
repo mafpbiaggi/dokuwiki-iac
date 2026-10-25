@@ -8,17 +8,18 @@ on:
         required: true
         type: string
 
-  workflow_dispatch:
-    inputs:
-      instance_public_ip:
-        description: IP público da instância provisionada
-        required: false
-        type: string
-    
     outputs:
       instance_public_ip:
         description: IP público da instância provisionada
         value: ${{ jobs.app.outputs.instance_public_ip }}
+
+  workflow_dispatch:
+    inputs:
+      instance_public_ip:
+        description: IP público da instância provisionada
+        required: true
+        type: string
+
 jobs:
   app:
     runs-on: ubuntu-latest
@@ -62,24 +63,25 @@ jobs:
       - name: Wait instance full creation
         env:
           HOST: ${{ inputs.instance_public_ip }}
-          INSTANCE_USER: ${{ secrets.INSTANCE_USER}}
+          INSTANCE_USER: ${{ secrets.INSTANCE_USER }}
         run: bash ../tests/instance_check.sh
 
       - name: Run production playbook
         env:
           HOST: ${{ inputs.instance_public_ip }}
-          INSTANCE_USER: ${{ secrets.INSTANCE_USER}}
+          INSTANCE_USER: ${{ secrets.INSTANCE_USER }}
           REGION: ${{ secrets.REGION }}
           TENANCY_OCID: ${{ secrets.TENANCY_OCID }}
           USER_OCID: ${{ secrets.USER_OCID }}
           FINGERPRINT: ${{ secrets.FINGERPRINT }}
           PRIVATE_API_KEY: ${{ secrets.PRIVATE_KEY }}
-          PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD}}
+          PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
           OBJECT_NAME: ${{ secrets.OBJECT_NAME }}
           OBJECT_NAME_FILE: ${{ secrets.OBJECT_NAME_FILE }}
           PERSISTENT_DIR: ${{ secrets.PERSISTENT_DIR }}
           CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+          NETWORK_NAME: ${{ secrets.NETWORK_NAME }}
           VOL_CONF_NAME: ${{ secrets.VOL_CONF_NAME }}
           VOL_DATA_NAME: ${{ secrets.VOL_DATA_NAME }}
         run: |
