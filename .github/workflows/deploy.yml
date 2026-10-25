@@ -7,6 +7,13 @@ on:
         description: IP público da instância provisionada
         required: true
         type: string
+
+  workflow_dispatch:
+    inputs:
+      instance_public_ip:
+        description: IP público da instância provisionada
+        required: false
+        type: string
     
     outputs:
       instance_public_ip:
