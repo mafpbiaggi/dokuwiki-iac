@@ -23,5 +23,6 @@
     volumes:
       - "{{ volume_conf_name }}:{{ container_conf_dir }}"
       - "{{ volume_data_name }}:{{ container_data_dir }}"
+      - "{{ volume_images_name }}:{{ container_images_dir }}"
   become: true
   tags: [deploy, docker_run]

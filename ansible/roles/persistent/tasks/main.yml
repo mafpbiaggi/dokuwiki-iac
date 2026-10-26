@@ -24,6 +24,9 @@
     - Fix permissions on data/
     - Check if custom logo exists
     - Copy persistent volume content (logo)
+    - Check path for volume images/
+    - Fix ownership for files and directories (images/)
+    - Fix permissions on images/
     - Rename object used for deploy
   register: persistent_object_get
   changed_when: persistent_object_get.rc == 0
