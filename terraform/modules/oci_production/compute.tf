@@ -34,4 +34,8 @@ resource "oci_core_instance" "this" {
   launch_options {
     is_pv_encryption_in_transit_enabled = var.instance_is_pv_encryption_in_transit_enabled
   }
+
+  lifecycle {
+    ignore_changes = [source_details[0].source_id]
+  }
 }
