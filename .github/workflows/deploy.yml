@@ -84,6 +84,7 @@ jobs:
           NETWORK_NAME: ${{ secrets.NETWORK_NAME }}
           VOL_CONF_NAME: ${{ secrets.VOL_CONF_NAME }}
           VOL_DATA_NAME: ${{ secrets.VOL_DATA_NAME }}
+          VOL_IMAGES_NAME: ${{ secrets.VOL_IMAGES_NAME }}
         run: |
           ansible-playbook playbook.yml \
             -i hosts.yml \
