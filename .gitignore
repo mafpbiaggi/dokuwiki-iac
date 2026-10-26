@@ -1,6 +1,9 @@
 # .env
 .env
 
+# Ansible
+.ansible
+
 # Local .terraform directories
 .terraform/
 .terraform.lock.*
