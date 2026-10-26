@@ -78,11 +78,37 @@
 
 - name: Copy persistent volume content (logo)
   ansible.builtin.command:
-    cmd: docker cp -q {{ ansible_facts.user_dir }}/{{ persistent_dir }}/logo.png {{ container_name }}:{{ container_logo_path }}
+    cmd: docker cp -q {{ ansible_facts.user_dir }}/{{ persistent_dir }}/logo.png {{ container_name }}:{{ container_images_dir }}/logo.png
   when: persistent_logo_check.stat.exists
   become: true
   register: persistent_copy_logo
   changed_when: persistent_copy_logo.rc != 0
+
+- name: Check path for volume images/
+  community.docker.docker_volume_info:
+    name: "{{ volume_data_name }}"
+  become: true
+  register: persistent_vol_images_result
+
+- name: Fix ownership for files and directories (images/)
+  ansible.builtin.file:
+    path: "{{ persistent_vol_images_result.volume.Mountpoint }}"
+    state: directory
+    recurse: true
+    owner: 33
+    group: 33
+  become: true
+  when: persistent_vol_images_result.exists
+
+- name: Fix permissions on images/
+  ansible.builtin.shell:
+    cmd: |
+      find {{ persistent_vol_images_result.volume.Mountpoint }} -type f -exec chmod 660 '{}' \;
+      find {{ persistent_vol_images_result.volume.Mountpoint }} -type d -exec chmod 770 '{}' \;
+  become: true
+  when: persistent_vol_images_result.exists
+  register: persistent_perm_images
+  changed_when: persistent_perm_images.rc != 0
 
 - name: Rename object used for deploy
   ansible.builtin.shell:

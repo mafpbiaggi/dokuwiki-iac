@@ -26,7 +26,8 @@ container_name: "{{ lookup('ansible.builtin.env', 'CONTAINER_NAME') }}"
 network_name: "{{ lookup('ansible.builtin.env', 'NETWORK_NAME') }}"
 volume_conf_name: "{{ lookup('ansible.builtin.env', 'VOL_CONF_NAME') }}"
 volume_data_name: "{{ lookup('ansible.builtin.env', 'VOL_DATA_NAME') }}"
+volume_logo_name: "{{ lookup('ansible.builtin.env', 'VOL_IMAGES_NAME') }}"
 persistent_dir: "{{ lookup('ansible.builtin.env', 'PERSISTENT_DIR') }}"
 container_conf_dir: /var/www/html/conf/
 container_data_dir: /var/www/html/data/
-container_logo_path: /var/www/html/lib/tpl/dokuwiki/images/logo.png
+container_images_dir: /var/www/html/lib/tpl/dokuwiki/images/
