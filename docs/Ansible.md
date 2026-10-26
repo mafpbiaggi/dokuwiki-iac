@@ -163,6 +163,7 @@ Configure os seguintes `secrets` no repositório:
 | `NETWORK_NAME` | Nome da rede do container | `dokuwiki` | Sim |
 | `VOL_CONF_NAME` | Nome do volume de configuração | `conf` | Sim |
 | `VOL_DATA_NAME` | Nome do volume de dados | `data` | Sim |
+| `VOL_IMAGES_NAME` | Nome do volume de imagens (logo customizado) | `images` | Sim |
 | `PERSISTENT_DIR` | Diretório base de persistência | `dados-dokuwiki` | Sim |
 | `INSTANCE_USER` | Nome do usuário da instância | `usuario` | Sim |
 | `HOST` | IP público da instância | `123.123.123.1` | Sim |
