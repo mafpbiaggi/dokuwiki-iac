@@ -93,7 +93,7 @@
 - name: Fix ownership for files and directories (images/)
   ansible.builtin.file:
     path: "{{ persistent_vol_images_result.volume.Mountpoint }}"
-    state: directory
+    state: file
     recurse: true
     owner: 33
     group: 33
