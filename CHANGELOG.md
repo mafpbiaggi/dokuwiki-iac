@@ -2,6 +2,20 @@
   
   Todas as alterações relevantes deste projeto serão documentadas neste arquivo. O formato baseia-se no [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   
+  ## [1.9.1] - 2026-10-26
+
+  ### Adicionado
+  - Ignora diretório local .ansible no .gitignore
+
+  ### Modificado
+  - Handler(`Fix ownership for files and directories (images/)`)
+    - Renomeia parâmetro state de `directory` para `file`
+
+  ### Corrigido
+  - Ansible: Renomeia variável interna `volume_logo_name` para `volume_images_name`
+  - Workflow de deploy (`.github/workflows/deploy.yml`)
+    - Adiciona variável VOL_IMAGES_NAME no passo `Run production playbook`
+
   ## [1.9.0] - 2026-10-26
 
   ### Adicionado
@@ -208,3 +222,4 @@
   [1.8.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.8.1
   [1.8.2]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.8.2
   [1.9.0]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.9.0
+  [1.9.1]: https://github.com/mafpbiaggi/dokuwiki-iac/releases/tag/1.9.1
